@@ -14,7 +14,7 @@ from plotonium import dark
 ```
 
 ## Animations
-For quick animations, this modules offers a easy way using a decorator. It is notable that this method is a lot less versatile than using `matplotlib.animation.FuncAnimation` directly, but it is also a lot shorter and easier to remember.
+For quick animations, this module offers an easy way using the decorator `@animate`. It is notable that this method is a lot less versatile than using `matplotlib.animation.FuncAnimation` directly, but it is also a lot shorter and easier to remember.
 
 ```python
 from plotonium import animate
@@ -26,6 +26,7 @@ def myfunc(t, fig, ax):
     y = np.sin(x + t)
     ax.plot(x, y, color="C0")
 ```
+In a Jupyter notebook, this will also display the animation using `IPython.display.Image`.
 
 The function, in the example `myfunc`, takes the arguments
 - `t`: Time variable. Runs from zero to one by default. Can be changed, see below
@@ -43,7 +44,7 @@ The `@animate` decorator takes the arguments
   - "frames": Number of the current frame
   - "seconds": The time in seconds
 
-(*) only two of thos three should be specified, as the third one will be redundant.
+(*) only two of those three should be specified, as the third one will be redundant.
 
 ## Customize it
 First of all, the colors can be easily changed in the respective python files.\
