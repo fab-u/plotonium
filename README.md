@@ -39,9 +39,9 @@ The `@animate` decorator takes the arguments
 - `time`: Total time of the animation (*)
 - `xlim`, `ylim`: Limits of the plot axis
 - `t_unit`: Unit of the time variable `t`. Options are:
-  - `one`: (Default) From zero to one
-  - `frames`: Number of the current frame
-  - `seconds`: The time in seconds
+  - "one": (Default) From zero to one
+  - "frames": Number of the current frame
+  - "seconds": The time in seconds
 
 (*) only two of thos three should be specified, as the third one will be redundant.
 
