@@ -19,17 +19,16 @@ def _frames_and_interval(frames, fps, time):
         interval = time / frames
         fps = 1/interval
     else:
-        print("ANIMATE: Parameters 'frames', 'fps', 'time' not given. Default values taken")
+        print(f"ANIMATE: Parameters 'frames', 'fps', 'time' not given.")
+        print(f"         Default values fps={default_fps} and time={default_time} taken")
 
         frames = default_fps * default_time
         fps = default_fps
         time = frames/fps
         interval = 1/default_fps
-    
-    print(f"ANIMATE: FPS:{fps}, Total time:{time:.1f}s, Frames:{frames}")
 
     interval *= 1000 # is given in ms
-    return int(frames), int(interval)
+    return int(frames), interval, fps, time
 
 # Modify the decorator to accept arguments
 def animate(name="animation.gif", dpi=300, fps=None, frames=None, time=None, xlim=False, ylim=False, t_unit="one"):
@@ -63,7 +62,8 @@ def animate(name="animation.gif", dpi=300, fps=None, frames=None, time=None, xli
             ax.set_ylim(ylim)
 
         # calculate fps, total time, frame count and interval from given parameters
-        frames_calc, interval_calc = _frames_and_interval(frames, fps, time)
+        frames_calc, interval_calc, fps_calc, time_calc = _frames_and_interval(frames, fps, time)
+        print(f"ANIMATE: FPS:{fps_calc}, Total time:{time_calc:.1f}s, Frames:{frames_calc}, dpi:{dpi}")
 
         # animation using the decorate function "func"
         # also add a cute little progress indicator
@@ -73,8 +73,10 @@ def animate(name="animation.gif", dpi=300, fps=None, frames=None, time=None, xli
                 line.remove()
             if t_unit == "one":
                 t = frame / frames_calc
+            elif t_unit == "seconds":
+                t = frame / fps_calc
             else:
-                t = frame         
+                t = frame
             func(t, fig, ax)
 
         anim = animation.FuncAnimation(fig=fig, func=animator, frames=frames_calc, interval=interval_calc)
@@ -88,9 +90,9 @@ def animate(name="animation.gif", dpi=300, fps=None, frames=None, time=None, xli
         # save animation as gif
         anim.save(filename=save_name, writer="pillow", dpi=dpi)
         print(f"ANIMATE: Animation saved as '{save_name}'")
-        # Replace 'path_to_your_gif.gif' with the actual path to your GIF file
         plt.close(fig)
         display(Image(filename=save_name))
+
     return decorator
 
 if __name__ == "__main__":
