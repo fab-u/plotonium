@@ -2,6 +2,7 @@ from .plotonium import dark, report, animate
 
 import matplotlib.pyplot as plt
 
+# default settigs
 _cm = 1/2.54
 plt.rcParams.update({
     "axes.grid" : True,
